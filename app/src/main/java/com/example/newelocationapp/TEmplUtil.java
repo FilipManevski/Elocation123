@@ -1,4 +1,4 @@
-package com.example.newelocationapp.Utillities;
+package com.example.newelocationapp;
 
 public class TEmplUtil {
 
@@ -11,4 +11,5 @@ public class TEmplUtil {
     public static final String GROUP_ID = "GroupID";
     public static final String GROUP_TASK = "GroupTask";
     public static final String PIN_CODE = "PinCode";
+
 }
