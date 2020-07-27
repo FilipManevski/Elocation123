@@ -19,8 +19,8 @@
             android:value="@string/map_key"/>
 
 
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".SecondPage" />
+        <activity android:name=".SecondPage"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

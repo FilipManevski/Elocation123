@@ -1,105 +1,166 @@
 package com.example.newelocationapp;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 
 import androidx.annotation.Nullable;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-
-    public static final String TABLE1 = "TStatus";
-    private static final String TABLE2 = "Memalarm";
-    private static final String TABLE3 = "tMemalarmPictures";
-    private static final String TABLE4 = "TChangedLocation";
-    private static final String TABLE5 = "Muser";
-    public static final String TABLE6 = "TEmployee";
-    private static final String TABLE7 = "Cities";
-    private static final String TABLE8 = "UserToClient";
-    private static final String TABLE9 = "Intervention";
-    private static final String TABLE10 = "SysDiagrams";
+    private static final String DATABASE_NAME = "aaaa.db";
 
 
-    private static final String DATABASE_NAME = "ElocationNewTest";
+    private static  String DB_PATH = "";
+    private static final int DB_VERSION = 1;
 
+    private SQLiteDatabase db;
+    private Context context;
+    private boolean mNeedUpdate = false;
 
 
     public DatabaseHandler(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DB_VERSION);
+        if (Build.VERSION.SDK_INT >= 17)
+            DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
 
+        else
+            DB_PATH = "/data/data/" + context.getPackageName() + "/databases";
+        this.context = context;
 
+        copyDatabase();
+        mNeedUpdate = false;
+
+    }
+
+    public void updateDatabase() throws IOException
+    {
+        if (mNeedUpdate)
+        {
+            File dbFile = new File(DB_PATH + DATABASE_NAME);
+            if (dbFile.exists())
+                dbFile.delete();
+        }
+    }
+
+    private boolean checkDatabase()
+    {
+        File dbFile = new File(DB_PATH + DATABASE_NAME);
+        return dbFile.exists();
+    }
+
+    private void copyDatabase()
+    {
+        if (!checkDatabase())
+        {
+            this.getReadableDatabase();
+            this.close();
+            try {
+                copyDBFile();
+            }catch (IOException mIOException)
+            {
+                throw new Error("ErrorCopyingDatabase");
+            }
+        }
+    }
+    private void copyDBFile() throws IOException
+    {
+        InputStream input = context.getAssets().open(DATABASE_NAME);
+        OutputStream output = new FileOutputStream(DB_PATH + DATABASE_NAME);
+        byte[] Buffer = new byte[1024];
+        int Length;
+        while ((Length = input.read(Buffer)) > 0)
+            output.write(Buffer,0,Length);
+        output.flush();
+        output.close();
+        input.close();
+    }
+
+    public boolean openDatabase() throws SQLException
+    {
+        db = SQLiteDatabase.openDatabase(DB_PATH + DATABASE_NAME,null,SQLiteDatabase.CREATE_IF_NECESSARY);
+        return db != null;
+    }
+
+    public synchronized void close()
+    {
+        if (db != null)
+            db.close();
+        super.close();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String TStatus = "CREATE TABLE "+TABLE1+"(StatusID INTEGER PRIMARY KEY, Status TEXT, Description TEXT)";
+        db.execSQL("Create table TEmployee(EmpID text,Name text, Surname text,GroupID text, GroupTask text" +
+                ",PinCode text primary key)");
 
-        String Memalarm = "CREATE TABLE "+TABLE2+"(Client_No TEXT PRIMARY KEY, ClientID TEXT, Name TEXT, Location TEXT, loc2 TEXT, Bus_Phone TEXT," +
-                " MobileNo TEXT, PagerNo TEXT, IDCities INTEGER, Description TEXT, Longitude REAL, Lattitude REAL, NOTE TEXT, MemalarmID INTEGER," +
-                " status INTEGER, IsDeleted NUMERIC, PictureExist NUMERIC, SystemID INTEGER, Client_No_Original TEXT)";
+        db.execSQL("Create table Cities (IDCities text primary key, Name text)");
+        db.execSQL("Create table Intervention (IDIntervention text primary key, ClientNo text, UserID text, " +
+                "InterventionStart text, InterventionEnd text, status text, EmpID text)");
+        db.execSQL("Create table Memalarm (Client_No text primary key, ClientID text, Name text, Location text," +
+                "loc2 text, Bus_Phone text, MobileNo text, PagerNo text,IDCities text, Description text, Longitude text," +
+                "Lattitude text, NOTE text, MemalarmID text, status text, IsDeleted text, PictureExist text, SystemID text," +
+                "Client_No_Original text )");
+        db.execSQL("Create table Muser (UserID text primary key, User_Name text, PhoneNo1 text, PhoneNo2 text, PhoneNo3 text," +
+                "PhoneNo4 text)");
+        db.execSQL("Create table TChangedLocation (ChLID text primary key, Client_No text, EmpID text, Longitude text, Lattitude text," +
+                "Date text, StatusID text, UserID text)");
+        db.execSQL("Create table TStatus (StatusID text primary key, Status text, Description text)");
+        db.execSQL("Create table UserToClient (UserId text primary key, ClientNo text, IDUserToClient text)");
+        db.execSQL("Create table tMemalarmPictures (IDPicture text primary key, ClientNo text, UserID text, TimeIns text,PictureName text," +
+                "Path text,EmpID text, Deleted text)");
 
-        String tMemalarmPictures = "CREATE TABLE "+TABLE3+"(IDIntervention INTEGER PRIMARY KEY, ClientNo TEXT, UserID INTEGER, InterventionStart TEXT, " +
-                "InterventionEnd TEXT, status INTEGER, EmpID INTEGER)";
-
-        String TChangedLocation = "CREATE TABLE "+TABLE4+"(ChLID INTEGER PRIMARY KEY, ClientNo TEXT, EmpID INTEGER, Longitude REAL, Lattitude REAL," +
-                " Date TEXT, StatusID INTEGER, UserID INTEGER)";
-
-        String Muser = "CREATE TABLE "+TABLE5+"(UserID INTEGER PRIMARY KEY, User_Name TEXT, PhoneNo1 TEXT, PhoneNo2 TEXT, PhoneNo3 TEXT, PhoneNo4 TEXT)";
-
-        String TEmployee = "CREATE TABLE "+TABLE6+"(EmpID INTEGER PRIMARY KEY, Name TEXT, Surname TEXT, GroupID INTEGER, GroupTask TEXT, PinCode TEXT)";
-
-        String Cities = "CREATE TABLE "+TABLE7+"(IDCities INTEGER PRIMARY KEY, Name TEXT)";
-
-        String UserToClient = "CREATE TABLE "+TABLE8+"(UserID INTEGER, ClientNo TEXT, IDUserToClient INTEGER PRIMARY KEY)";
-
-        String Intervention = "CREATE TABLE "+TABLE9+"(IDIntervention INTEGER PRIMARY KEY, ClientNo TEXT, UserID INTEGER, InterventionStart TEXT," +
-                " InterventionEnd TEXT, status INTEGER, EmpID INTEGER)";
-
-        String SysDiagrams = "CREATE TABLE " + TABLE10 + "(Name INTEGER PRIMARY KEY, PrincipalID TEXT, DIagramID TEXT, Version TEXT, Definition TEXT)";
-
-
-
-
-        db.execSQL(TStatus);
-        db.execSQL(Memalarm);
-        db.execSQL(tMemalarmPictures);
-        db.execSQL(TChangedLocation);
-        db.execSQL(Muser);
-        db.execSQL(TEmployee);
-        db.execSQL(Cities);
-        db.execSQL(UserToClient);
-        db.execSQL(Intervention);
-        db.execSQL(SysDiagrams);
 
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion)
+            mNeedUpdate = true;
+        db.execSQL("drop table if exists TEmployee");
+        db.execSQL("drop table if exists Cities");
+        db.execSQL("drop table if exists Intervention");
+        db.execSQL("drop table if exists Memalarm");
+        db.execSQL("drop table if exists Muser");
+        db.execSQL("drop table if exists TChangedLocation");
+        db.execSQL("drop table if exists TStatus");
+        db.execSQL("drop table if exists UserToClient");
+        db.execSQL("drop table if exists tMemalarmPictures");
 
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE1);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE2);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE3);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE4);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE5);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE6);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE7);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE8);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE9);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE10);
-
-        onCreate(db);
     }
 
 
 
-
-
-
-
-
-
-
+    public boolean checkUser(String EmpID, String PinCode)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from TEmployee where EmpID=? and PinCode=?", new String[]{EmpID,PinCode});
+        if (cursor.getCount()>0)  return true;
+        else return false;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
