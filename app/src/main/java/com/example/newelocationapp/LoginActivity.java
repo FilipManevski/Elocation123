@@ -3,6 +3,7 @@ package com.example.newelocationapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
+
+
         DbH = new DatabaseHandler(this);
         sifraPatrola = findViewById(R.id.sifraPatrola);
         sifraKorisnik = findViewById(R.id.sifraKorisnik);
@@ -39,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 String PinCode = sifraKorisnik.getText().toString();
                 boolean CU = DbH.checkUser(EmpID,PinCode);
                 if (CU == true) {
-                    Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
+                    Intent myIntent = new Intent(LoginActivity.this,SecondPage.class);
                     startActivity(myIntent);
                     Toast.makeText(getApplicationContext(), "Успешно најавени.", Toast.LENGTH_SHORT).show();
 
@@ -53,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         });
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 
 
     }
