@@ -149,6 +149,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.getCount()>0)  return true;
         else return false;
     }
+
+
+    public boolean checkID(String ClientID)
+    {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from Memalarm where ClientID=? ",new String[]{ClientID});
+
+        if (cursor.getCount()>0) return true;
+        else return false;
+
+    }
+
+     public void getData(String Name, String Location, String loc2)
+     {
+         Cursor cursor = db.rawQuery("select * from Memalarm where Name=? and Location=? and loc2=?", new String[]{Name,Location,loc2});
+
+     }
 }
 
 

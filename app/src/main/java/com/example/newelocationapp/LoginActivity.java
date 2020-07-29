@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 String PinCode = sifraKorisnik.getText().toString();
                 boolean CU = DbH.checkUser(EmpID,PinCode);
                 if (CU == true) {
-                    Intent myIntent = new Intent(LoginActivity.this,SecondPage.class);
+                    Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(myIntent);
                     Toast.makeText(getApplicationContext(), "Успешно најавени.", Toast.LENGTH_SHORT).show();
 

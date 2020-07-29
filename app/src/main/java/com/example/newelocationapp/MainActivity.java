@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
 
-Button client;
-
+Button client,odjavi,locirajClient;
+EditText sifraKlient;
+ListView listClients;
+DatabaseHandler Dbh;
 
 
 
@@ -21,7 +26,13 @@ Button client;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Dbh = new DatabaseHandler(this);
+        odjavi = findViewById(R.id.button6);
+        locirajClient = findViewById(R.id.locirajClient);
+        sifraKlient = findViewById(R.id.clientID);
         client = findViewById(R.id.button5);
+
         client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,7 +41,28 @@ Button client;
             }
         });
 
+             odjavi.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
 
+                     Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                     startActivity(i);
+
+                 }
+             });
+
+             locirajClient.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     String ClientID = sifraKlient.getText().toString();
+                     boolean CL = Dbh.checkID(ClientID);
+                     if (CL == true)
+                     {
+                        String getData =
+
+                     }
+                 }
+             });
 
     }
 

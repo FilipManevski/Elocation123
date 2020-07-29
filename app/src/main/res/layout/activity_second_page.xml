@@ -77,7 +77,7 @@
         app:layout_constraintVertical_bias="0.156" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/locirajClient"
         android:layout_width="191dp"
         android:layout_height="67dp"
         android:text="Пребарај Клиент"
