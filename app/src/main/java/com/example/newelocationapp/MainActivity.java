@@ -27,9 +27,42 @@ DatabaseHandler Dbh;
         setContentView(R.layout.activity_main);
 
 
+        Dbh = new DatabaseHandler(this);
+        odjavi = findViewById(R.id.button6);
+        locirajClient = findViewById(R.id.locirajClient);
+        sifraKlient = findViewById(R.id.clientID);
+        client = findViewById(R.id.button5);
 
+        client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, SecondPage.class);
+                startActivity(i);
+            }
+        });
 
+             odjavi.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
 
+                     Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                     startActivity(i);
+
+                 }
+             });
+
+             locirajClient.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     String ClientID = sifraKlient.getText().toString();
+                     boolean CL = Dbh.checkID(ClientID);
+                     if (CL == true)
+                     {
+                        String getData =
+
+                     }
+                 }
+             });
 
     }
 
