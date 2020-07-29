@@ -39,9 +39,9 @@
             android:label="@string/title_activity_maps"></activity>
         <activity android:name=".SecondPage"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".LoginActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".MainActivity">
 
 
 
