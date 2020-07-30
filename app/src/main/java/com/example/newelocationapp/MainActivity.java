@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +27,10 @@ DatabaseHandler Dbh;
 
 
         Dbh = new DatabaseHandler(this);
-        odjavi = findViewById(R.id.button6);
-        locirajClient = findViewById(R.id.locirajClient);
-        sifraKlient = findViewById(R.id.clientID);
-        client = findViewById(R.id.button5);
+        odjavi = findViewById(R.id.odjavi);
+        locirajClient = findViewById(R.id.button);
+        sifraKlient = findViewById(R.id.ClientID);
+        client = findViewById(R.id.pregledajKlient);
 
         client.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +57,7 @@ DatabaseHandler Dbh;
                      boolean CL = Dbh.checkID(ClientID);
                      if (CL == true)
                      {
-                        String getData =
+
 
                      }
                  }

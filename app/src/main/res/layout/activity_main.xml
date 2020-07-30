@@ -16,95 +16,60 @@
         android:background="@color/colorAccent"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="61dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="376dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="580dp"
         android:text="Внеси шифра на клиент:"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2"
-        app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="68dp" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/ClientID"
         android:layout_width="226dp"
         android:layout_height="42dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="550dp"
         android:background="#FFFFFF"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        tools:layout_editor_absoluteX="74dp"
+        tools:layout_editor_absoluteY="142dp" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="250dp"
         android:layout_height="65dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="470dp"
         android:text="Лоцирај клиент"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="553dp" />
 
     <ListView
         android:id="@+id/listview1"
         android:layout_width="597dp"
         android:layout_height="297dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="150dp"
         android:background="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        tools:layout_editor_absoluteX="571dp"
+        tools:layout_editor_absoluteY="298dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/pregledajKlient"
         android:layout_width="250dp"
         android:layout_height="65dp"
-        android:text="Заврши интервенција"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2"
-        app:layout_constraintTop_toTopOf="@+id/button3"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="250dp"
-        android:layout_height="65dp"
-        android:layout_marginBottom="24dp"
         android:text="Прегледај клиенти"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintEnd_toEndOf="@+id/listview1"
-        app:layout_constraintStart_toStartOf="@+id/listview1"
-        app:layout_constraintTop_toBottomOf="@+id/_dynamic"
-        app:layout_constraintVertical_bias="0.627" />
+        tools:layout_editor_absoluteX="64dp"
+        tools:layout_editor_absoluteY="233dp" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/odjavi"
         android:layout_width="250dp"
         android:layout_height="65dp"
         android:text="Одјави"
         android:textColor="@android:color/holo_red_dark"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
-        app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button3" />
+        tools:layout_editor_absoluteX="74dp"
+        tools:layout_editor_absoluteY="645dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

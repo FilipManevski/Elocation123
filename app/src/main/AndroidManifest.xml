@@ -30,21 +30,18 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"
-            />
+            android:value="@string/google_maps_key" />
 
         <activity
-
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".SecondPage"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".LoginActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".MainActivity">
-
-
-
+        <activity
+            android:name=".SecondPage"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,8 +49,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".WebService" />
-
-
     </application>
 
 </manifest>

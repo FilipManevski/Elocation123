@@ -14,4 +14,5 @@
     <item name="list_view1" type="id"/>
     <item name="list_view2" type="id"/>
     <item name="list_view3" type="id"/>
+    <item name="map" type="id"></item>
 </resources>

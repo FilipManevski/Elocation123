@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -162,10 +163,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-     public void getData(String Name, String Location, String loc2)
+     public ArrayList<String> getData(String Name,String Location, String loc2)
      {
+           ArrayList<String> dataList = new ArrayList<>();
+         SQLiteDatabase db = this.getReadableDatabase();
          Cursor cursor = db.rawQuery("select * from Memalarm where Name=? and Location=? and loc2=?", new String[]{Name,Location,loc2});
-
+          if (cursor.getCount()>0)
+          {
+              dataList.add(cursor.getString(cursor.getColumnIndex("Name")));
+              dataList.add(cursor.getString(cursor.getColumnIndex("Location")));
+              dataList.add(cursor.getString(cursor.getColumnIndex("loc2")));
+          }
+          return dataList;
      }
 }
 
