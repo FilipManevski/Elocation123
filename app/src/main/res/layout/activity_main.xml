@@ -5,71 +5,136 @@
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#009688"
     app:layout_constraintBaseline_toBaselineOf="parent"
     tools:context=".MainActivity">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="1203dp"
-        android:layout_height="679dp"
-        android:background="@color/colorAccent"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="61dp" />
-
     <TextView
         android:id="@+id/textView"
-        android:layout_width="376dp"
-        android:layout_height="48dp"
-        android:text="Внеси шифра на клиент:"
-        android:textSize="30sp"
+        android:layout_width="418dp"
+        android:layout_height="46dp"
+        android:background="#FFFFFF"
+        android:text="Внеси шифра на клиент"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#090808"
+        android:textSize="24sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="92dp"
-        tools:layout_editor_absoluteY="68dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021" />
 
     <EditText
-        android:id="@+id/ClientID"
-        android:layout_width="226dp"
-        android:layout_height="42dp"
+        android:id="@+id/clientID"
+        android:layout_width="384dp"
+        android:layout_height="88dp"
         android:background="#FFFFFF"
-        android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="142dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.109" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="250dp"
-        android:layout_height="65dp"
-        android:text="Лоцирај клиент"
-        tools:layout_editor_absoluteX="73dp"
-        tools:layout_editor_absoluteY="553dp" />
+        android:layout_width="317dp"
+        android:layout_height="75dp"
+        android:text="Пребарај Клиент"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.288" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="317dp"
+        android:layout_height="75dp"
+        android:text="Започни рута"
+        android:textColor="#0C0A0A"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.447" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="317dp"
+        android:layout_height="75dp"
+        android:text="Одјави"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.609" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="540dp"
+        android:layout_height="86dp"
+        android:background="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="540dp"
+        android:layout_height="86dp"
+        android:background="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.232" />
+
+    <TextView
+        android:id="@+id/loc2"
+        android:layout_width="540dp"
+        android:layout_height="86dp"
+        android:background="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.352" />
 
     <ListView
-        android:id="@+id/listview1"
-        android:layout_width="597dp"
-        android:layout_height="297dp"
+        android:id="@+id/list"
+        android:layout_width="527dp"
+        android:layout_height="283dp"
         android:background="#FFFFFF"
-        tools:layout_editor_absoluteX="571dp"
-        tools:layout_editor_absoluteY="298dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.771" />
 
-    <Button
-        android:id="@+id/pregledajKlient"
-        android:layout_width="250dp"
-        android:layout_height="65dp"
-        android:text="Прегледај клиенти"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="233dp" />
 
-    <Button
-        android:id="@+id/odjavi"
-        android:layout_width="250dp"
-        android:layout_height="65dp"
-        android:text="Одјави"
-        android:textColor="@android:color/holo_red_dark"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="645dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

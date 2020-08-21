@@ -6,17 +6,22 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
+
+import com.example.newelocationapp.Utillities.MemalaUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
+
+
+
 
     private static final String DATABASE_NAME = "aaaa.db";
 
@@ -27,6 +32,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private SQLiteDatabase db;
     private Context context;
     private boolean mNeedUpdate = false;
+    EditText sifraKlient;
+    MainActivity main;
+
 
 
     public DatabaseHandler(@Nullable Context context) {
@@ -102,24 +110,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("Create table TEmployee(EmpID text,Name text, Surname text,GroupID text, GroupTask text" +
-                ",PinCode text primary key)");
 
-        db.execSQL("Create table Cities (IDCities text primary key, Name text)");
-        db.execSQL("Create table Intervention (IDIntervention text primary key, ClientNo text, UserID text, " +
-                "InterventionStart text, InterventionEnd text, status text, EmpID text)");
-        db.execSQL("Create table Memalarm (Client_No text primary key, ClientID text, Name text, Location text," +
-                "loc2 text, Bus_Phone text, MobileNo text, PagerNo text,IDCities text, Description text, Longitude text," +
-                "Lattitude text, NOTE text, MemalarmID text, status text, IsDeleted text, PictureExist text, SystemID text," +
-                "Client_No_Original text )");
-        db.execSQL("Create table Muser (UserID text primary key, User_Name text, PhoneNo1 text, PhoneNo2 text, PhoneNo3 text," +
-                "PhoneNo4 text)");
-        db.execSQL("Create table TChangedLocation (ChLID text primary key, Client_No text, EmpID text, Longitude text, Lattitude text," +
-                "Date text, StatusID text, UserID text)");
-        db.execSQL("Create table TStatus (StatusID text primary key, Status text, Description text)");
-        db.execSQL("Create table UserToClient (UserId text primary key, ClientNo text, IDUserToClient text)");
-        db.execSQL("Create table tMemalarmPictures (IDPicture text primary key, ClientNo text, UserID text, TimeIns text,PictureName text," +
-                "Path text,EmpID text, Deleted text)");
+     main = new MainActivity();
+
+      String CREATE_MEMALARM_TABLE = "CREATE TABLE " +  MemalaUtil.TABLE_NAME + "(" + MemalaUtil.CLIENT_NO + "INTEGER PRIMARY KEY," + MemalaUtil.Client_ID + " TEXT," +
+              MemalaUtil.NAME + " TEXT," + MemalaUtil.LOCATION + " TEXT,"+ MemalaUtil.LOC2 + " TEXT," + MemalaUtil.BUS_PHONE + " TEXT," + MemalaUtil.MOBILE_NO + " TEXT," +
+              MemalaUtil.PAGER_NO + " TEXT," + MemalaUtil.ID_CITIES + " TEXT," + MemalaUtil.DESCRIPTION + " TEXT," + MemalaUtil.LONGITUDE + " TEXT," + MemalaUtil.LATITUDE + " TEXT," +
+              MemalaUtil.NOTE + " TEXT," + MemalaUtil.MEMALARM_ID + " TEXT," + MemalaUtil.STATUS + " TEXT," + MemalaUtil.IS_DELETED + " TEXT," + MemalaUtil.SYSTEM_ID + " TEXT," +
+              MemalaUtil.CLIENT_NO_ORIGINAL + " TEXT" + ")";
+      db.execSQL(CREATE_MEMALARM_TABLE);
+
 
 
 
@@ -129,17 +129,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion)
             mNeedUpdate = true;
-        db.execSQL("drop table if exists TEmployee");
-        db.execSQL("drop table if exists Cities");
-        db.execSQL("drop table if exists Intervention");
-        db.execSQL("drop table if exists Memalarm");
-        db.execSQL("drop table if exists Muser");
-        db.execSQL("drop table if exists TChangedLocation");
-        db.execSQL("drop table if exists TStatus");
-        db.execSQL("drop table if exists UserToClient");
-        db.execSQL("drop table if exists tMemalarmPictures");
+
+        db.execSQL("DROP TABLE IF EXISTS " + MemalaUtil.TABLE_NAME);
+        onCreate(db);
+
+
 
     }
+
+    public String checkCL(String ClientID)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from Memalarm where ClientID = " + main.sifraKlient, new String[Integer.parseInt(ClientID)] );
+        cursor.moveToNext();
+        return ClientID;
+
+    }
+
 
 
 
@@ -163,19 +170,78 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-     public ArrayList<String> getData(String Name,String Location, String loc2)
+ /*public ArrayList<MemalaUtil> getList()
+ {
+
+
+     SQLiteDatabase db = this.getReadableDatabase();
+     ArrayList<MemalaUtil> memalaUtils = new ArrayList<>();
+     MemalaUtil memalaUtil;
+     Cursor cursor = db.rawQuery("select * from Memalarm where ClientID=" +main.ClientID1 ,null);
+
+     if (cursor.getCount() > 0)
      {
-           ArrayList<String> dataList = new ArrayList<>();
-         SQLiteDatabase db = this.getReadableDatabase();
-         Cursor cursor = db.rawQuery("select * from Memalarm where Name=? and Location=? and loc2=?", new String[]{Name,Location,loc2});
-          if (cursor.getCount()>0)
-          {
-              dataList.add(cursor.getString(cursor.getColumnIndex("Name")));
-              dataList.add(cursor.getString(cursor.getColumnIndex("Location")));
-              dataList.add(cursor.getString(cursor.getColumnIndex("loc2")));
-          }
-          return dataList;
+         for (int i = 0; i < cursor.getCount(); i++)
+         {
+             cursor.moveToNext();
+             memalaUtil = new MemalaUtil();
+             memalaUtil.setNAME(cursor.getString(1));
+             memalaUtil.setLOCATION(cursor.getString(2));
+             memalaUtil.setLOC2(cursor.getString(3));
+             memalaUtils.add(memalaUtil);
+
+         }
      }
+
+     cursor.close();
+     db.close();
+     return memalaUtils;
+
+ }
+ *?
+  */
+
+
+ public  MemalaUtil  clientInfo(String ClientID)
+ {
+     SQLiteDatabase db = this.getReadableDatabase();
+     Cursor cursor = db.rawQuery("select * from Memalarm where ClientID = " + main.Proverka, new String[Integer.parseInt(ClientID)]);
+
+
+     cursor.moveToFirst();
+
+     MemalaUtil memalaUtil = new MemalaUtil();
+     memalaUtil.setNAME(cursor.getString(cursor.getColumnIndex("Name")));
+     memalaUtil.setLOCATION(cursor.getString(cursor.getColumnIndex("Location")));
+     memalaUtil.setLOC2(cursor.getString(cursor.getColumnIndex("loc2")));
+     cursor.close();
+     db.close();
+
+     return memalaUtil;
+
+
+
+
+ }
+
+
+public Cursor viewData(String ClientID)
+{
+
+
+    SQLiteDatabase db = this.getWritableDatabase();
+    Cursor cursor = db.rawQuery("select * from " + MemalaUtil.TABLE_NAME + " where " + MemalaUtil.Client_ID + " = " + main.Proverka  ,new String[Integer.parseInt(ClientID)]);
+    cursor.moveToFirst();
+
+    cursor.getColumnIndex("Name");
+    cursor.getColumnIndex("Location");
+    cursor.getColumnIndex("loc2");
+
+    return cursor;
+}
+
+
+
 }
 
 
