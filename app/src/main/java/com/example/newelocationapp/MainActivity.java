@@ -8,14 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-
-import com.example.newelocationapp.Utillities.MemalaUtil;
-
-import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
@@ -23,8 +18,8 @@ public class MainActivity extends Activity {
 Button client,odjavi,locirajClient,zapocniRuta;
 EditText sifraKlient;
 TextView Name,Location,loc2;
-ListView listClients;
-ArrayList<MemalaUtil> list;
+
+
 DatabaseHandler Dbh;
 
 
@@ -36,9 +31,9 @@ DatabaseHandler Dbh;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listClients = findViewById(R.id.list);
+
         Dbh = new DatabaseHandler(this);
-        list = new ArrayList<>();
+
         zapocniRuta = findViewById(R.id.zapocni);
         Name = findViewById(R.id.name);
 
