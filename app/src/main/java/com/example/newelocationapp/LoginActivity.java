@@ -1,5 +1,7 @@
 package com.example.newelocationapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,14 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
 
 
     DatabaseHandler DbH;
     EditText sifraPatrola, sifraKorisnik;
     Button login;
+    Context context;
 
 
     @Override
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         DbH = new DatabaseHandler(this);
         sifraPatrola = findViewById(R.id.sifraPatrola);
         sifraKorisnik = findViewById(R.id.sifraKorisnik);
-        login = (Button) findViewById(R.id.login);
+        login =  findViewById(R.id.login);
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -38,13 +39,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-                String EmpID = sifraPatrola.getText().toString();
+                String UserID = sifraPatrola.getText().toString();
                 String PinCode = sifraKorisnik.getText().toString();
-                boolean CU = DbH.checkUser(EmpID,PinCode);
-                if (CU == true) {
-                    Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(myIntent);
-                    Toast.makeText(getApplicationContext(), "Успешно најавени.", Toast.LENGTH_SHORT).show();
+                boolean CU = DbH.checkUser(PinCode);
+                boolean CUD = DbH.checkUserID(UserID);
+                if (CU == true && CUD == true) {
+                    Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                       startActivity(myIntent);
+
 
                 }
                 else

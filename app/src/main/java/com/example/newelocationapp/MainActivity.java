@@ -1,35 +1,32 @@
 package com.example.newelocationapp;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newelocationapp.Utillities.MemalaUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
 
-Button client,odjavi,locirajClient;
+Button client,odjavi,locirajClient,zapocniRuta;
 EditText sifraKlient;
+TextView Name,Location,loc2;
 ListView listClients;
 ArrayList<MemalaUtil> list;
 DatabaseHandler Dbh;
-ArrayAdapter<String> adapter;
-MainActivity main;
 
-String Proverka;
- MemalaUtil CLID;
 
 
 
@@ -42,6 +39,9 @@ String Proverka;
         listClients = findViewById(R.id.list);
         Dbh = new DatabaseHandler(this);
         list = new ArrayList<>();
+        zapocniRuta = findViewById(R.id.zapocni);
+        Name = findViewById(R.id.name);
+
 
 
         odjavi = findViewById(R.id.button3);
@@ -49,15 +49,46 @@ String Proverka;
         sifraKlient = findViewById(R.id.clientID);
 
 
+
+
         client = findViewById(R.id.button);
 
 
 
-       Proverka = sifraKlient.getText().toString();
+
+
+
+      zapocniRuta.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+              String ClientID = sifraKlient.getText().toString();
+
+
+              boolean ClientLL = Dbh.checkID(ClientID);
+
+
+              if (ClientLL == true) {
+
+                  Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                  startActivity(intent);
+
+
+                  DBManager dbManager = new DBManager(MainActivity.this);
+                  try {
+                      dbManager.open();
+                  } catch (Exception e) {
+                      e.printStackTrace();
+                  }
+
+                   Cursor cursor = dbManager.getLatLng(ClientID);
 
 
 
 
+              }
+          }
+      });
 
 
 
@@ -87,9 +118,13 @@ String Proverka;
              locirajClient.setOnClickListener(new AdapterView.OnClickListener() {
                  @Override
                  public void onClick(View v) {
+
+
                      String ClientID = sifraKlient.getText().toString();
 
+
                      boolean CL = Dbh.checkID(ClientID);
+
 
 
 
@@ -99,13 +134,30 @@ String Proverka;
 
 
 
-                         CLID =    Dbh.clientInfo(ClientID);
+
+                        DBManager dbManager = new DBManager(MainActivity.this);
+                         try {
+                             dbManager.open();
+                         } catch (Exception e) {
+                             e.printStackTrace();
+                         }
+
+
+                         Cursor cursor = dbManager.fetch(ClientID);
+
+
+                             cursor.moveToFirst();
+                             Name = findViewById(R.id.name);
+                             Location = findViewById(R.id.location);
+                             loc2 = findViewById(R.id.loc2);
+                             Name.setText(cursor.getString(0));
+                             Location.setText(cursor.getString(1));
+                             loc2.setText(cursor.getString(2));
 
 
 
-                         adapter  = new ArrayAdapter<>(MainActivity.this ,android.R.layout.simple_list_item_1, (List<String>) CLID);
 
-                         listClients.setAdapter(adapter);
+
 
 
 

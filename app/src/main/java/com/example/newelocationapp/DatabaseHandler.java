@@ -10,8 +10,6 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
-import com.example.newelocationapp.Utillities.MemalaUtil;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,6 +30,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private SQLiteDatabase db;
     private Context context;
     private boolean mNeedUpdate = false;
+
     EditText sifraKlient;
     MainActivity main;
 
@@ -43,13 +42,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
 
         else
-            DB_PATH = "/data/data/" + context.getPackageName() + "/databases";
+            DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
         this.context = context;
 
         copyDatabase();
-        mNeedUpdate = false;
 
+
+        this.getReadableDatabase();
     }
+
 
     public void updateDatabase() throws IOException
     {
@@ -58,6 +59,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             File dbFile = new File(DB_PATH + DATABASE_NAME);
             if (dbFile.exists())
                 dbFile.delete();
+
+            copyDatabase();
+
+            mNeedUpdate = false;
         }
     }
 
@@ -111,18 +116,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
 
-     main = new MainActivity();
-
-      String CREATE_MEMALARM_TABLE = "CREATE TABLE " +  MemalaUtil.TABLE_NAME + "(" + MemalaUtil.CLIENT_NO + "INTEGER PRIMARY KEY," + MemalaUtil.Client_ID + " TEXT," +
-              MemalaUtil.NAME + " TEXT," + MemalaUtil.LOCATION + " TEXT,"+ MemalaUtil.LOC2 + " TEXT," + MemalaUtil.BUS_PHONE + " TEXT," + MemalaUtil.MOBILE_NO + " TEXT," +
-              MemalaUtil.PAGER_NO + " TEXT," + MemalaUtil.ID_CITIES + " TEXT," + MemalaUtil.DESCRIPTION + " TEXT," + MemalaUtil.LONGITUDE + " TEXT," + MemalaUtil.LATITUDE + " TEXT," +
-              MemalaUtil.NOTE + " TEXT," + MemalaUtil.MEMALARM_ID + " TEXT," + MemalaUtil.STATUS + " TEXT," + MemalaUtil.IS_DELETED + " TEXT," + MemalaUtil.SYSTEM_ID + " TEXT," +
-              MemalaUtil.CLIENT_NO_ORIGINAL + " TEXT" + ")";
-      db.execSQL(CREATE_MEMALARM_TABLE);
-
-
-
-
     }
 
     @Override
@@ -130,116 +123,69 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (newVersion > oldVersion)
             mNeedUpdate = true;
 
-        db.execSQL("DROP TABLE IF EXISTS " + MemalaUtil.TABLE_NAME);
-        onCreate(db);
+
 
 
 
     }
 
-    public String checkCL(String ClientID)
+
+
+    public boolean checkUser( String PinCode)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("select * from Memalarm where ClientID = " + main.sifraKlient, new String[Integer.parseInt(ClientID)] );
-        cursor.moveToNext();
-        return ClientID;
-
-    }
-
-
-
-
-    public boolean checkUser(String EmpID, String PinCode)
-    {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from TEmployee where EmpID=? and PinCode=?", new String[]{EmpID,PinCode});
+        Cursor cursor = db.rawQuery("select * from TEmployee where  PinCode=?", new String[]{PinCode});
         if (cursor.getCount()>0)  return true;
         else return false;
     }
+
+    public boolean checkUserID( String UserID)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from Muser where  UserID=?", new String[]{UserID});
+        if (cursor.getCount()>0)  return true;
+        else return false;
+    }
+
+
 
 
     public boolean checkID(String ClientID)
     {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from Memalarm where ClientID=? ",new String[]{ClientID});
+        Cursor cursor = db.rawQuery("select * from Memalarm where ClientID=?  " ,new String[]{ClientID});
 
         if (cursor.getCount()>0) return true;
         else return false;
 
     }
 
- /*public ArrayList<MemalaUtil> getList()
- {
 
+/*    public String checkID1(String ClientID)
+    {
 
-     SQLiteDatabase db = this.getReadableDatabase();
-     ArrayList<MemalaUtil> memalaUtils = new ArrayList<>();
-     MemalaUtil memalaUtil;
-     Cursor cursor = db.rawQuery("select * from Memalarm where ClientID=" +main.ClientID1 ,null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from Memalarm where ClientID=?  " ,new String[]{ClientID});
 
-     if (cursor.getCount() > 0)
-     {
-         for (int i = 0; i < cursor.getCount(); i++)
-         {
-             cursor.moveToNext();
-             memalaUtil = new MemalaUtil();
-             memalaUtil.setNAME(cursor.getString(1));
-             memalaUtil.setLOCATION(cursor.getString(2));
-             memalaUtil.setLOC2(cursor.getString(3));
-             memalaUtils.add(memalaUtil);
+        if (cursor.getCount()>0)
 
-         }
-     }
+            return ClientID;
+        else return null;
 
-     cursor.close();
-     db.close();
-     return memalaUtils;
+    }
+    */
 
- }
- *?
-  */
+    public boolean checkProverka(String Proverka)
+    {
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from Memalarm where ClientID=?  " ,new String[]{Proverka});
 
- public  MemalaUtil  clientInfo(String ClientID)
- {
-     SQLiteDatabase db = this.getReadableDatabase();
-     Cursor cursor = db.rawQuery("select * from Memalarm where ClientID = " + main.Proverka, new String[Integer.parseInt(ClientID)]);
+        if (cursor.getCount()>0) return true;
+        else return false;
 
-
-     cursor.moveToFirst();
-
-     MemalaUtil memalaUtil = new MemalaUtil();
-     memalaUtil.setNAME(cursor.getString(cursor.getColumnIndex("Name")));
-     memalaUtil.setLOCATION(cursor.getString(cursor.getColumnIndex("Location")));
-     memalaUtil.setLOC2(cursor.getString(cursor.getColumnIndex("loc2")));
-     cursor.close();
-     db.close();
-
-     return memalaUtil;
-
-
-
-
- }
-
-
-public Cursor viewData(String ClientID)
-{
-
-
-    SQLiteDatabase db = this.getWritableDatabase();
-    Cursor cursor = db.rawQuery("select * from " + MemalaUtil.TABLE_NAME + " where " + MemalaUtil.Client_ID + " = " + main.Proverka  ,new String[Integer.parseInt(ClientID)]);
-    cursor.moveToFirst();
-
-    cursor.getColumnIndex("Name");
-    cursor.getColumnIndex("Location");
-    cursor.getColumnIndex("loc2");
-
-    return cursor;
-}
-
+    }
 
 
 }
