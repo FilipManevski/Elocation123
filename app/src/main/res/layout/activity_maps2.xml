@@ -9,9 +9,178 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="993dp"
+        android:layout_width="1000dp"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
         tools:context=".MapsActivity" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="130dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName4"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Име" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/editTextTextPersonName4"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName5"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView10"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Локација" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/editTextTextPersonName5"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName6"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView11"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Тип на објект" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/editTextTextPersonName6"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button4"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="112dp"
+        android:layout_toEndOf="@+id/map"
+        android:text="Заврши интервенција" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName7"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView12"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Лонгтитуд" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/editTextTextPersonName7"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName8"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView9"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Латитуд" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/editTextTextPersonName8"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView13"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/map"
+        android:text="Започни рута" />
 
 
 </RelativeLayout>
