@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DBManager {
 
-MainActivity main;
+
 
     private Context context;
     private SQLiteDatabase database;
@@ -41,8 +41,7 @@ MainActivity main;
     public Cursor fetch(String ClientID)
     {
 
-        //String checkID = db.checkID1(ClientID);
-        Cursor cursor = this.database.rawQuery("select Name,Location,loc2 from Memalarm where ClientID=" + ClientID,null );
+        Cursor cursor = this.database.rawQuery("select Name,Location,loc2,Longitude,Lattitude from Memalarm where ClientID=" + ClientID,null );
 
 
        if (cursor != null && cursor.getCount() > 0)

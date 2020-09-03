@@ -17,7 +17,8 @@ public class MainActivity extends Activity {
 
 Button client,odjavi,locirajClient,zapocniRuta;
 EditText sifraKlient;
-TextView Name,Location,loc2;
+TextView Name,Location,loc2,Longitude,Lattitude;
+Object lattitude,longitude;
 
 
 DatabaseHandler Dbh;
@@ -35,7 +36,7 @@ DatabaseHandler Dbh;
         Dbh = new DatabaseHandler(this);
 
         zapocniRuta = findViewById(R.id.zapocni);
-        Name = findViewById(R.id.name);
+
 
 
 
@@ -54,6 +55,9 @@ DatabaseHandler Dbh;
 
 
       zapocniRuta.setOnClickListener(new View.OnClickListener() {
+          public Object LatLng;
+
+
           @Override
           public void onClick(View v) {
 
@@ -65,8 +69,6 @@ DatabaseHandler Dbh;
 
               if (ClientLL == true) {
 
-                  Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                  startActivity(intent);
 
 
                   DBManager dbManager = new DBManager(MainActivity.this);
@@ -76,7 +78,12 @@ DatabaseHandler Dbh;
                       e.printStackTrace();
                   }
 
-                   Cursor cursor = dbManager.getLatLng(ClientID);
+                  Cursor cursor = dbManager.getLatLng(ClientID);
+                  cursor.moveToFirst();
+
+                  Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+
+                  startActivity(intent);
 
 
 
@@ -116,20 +123,10 @@ DatabaseHandler Dbh;
 
 
                      String ClientID = sifraKlient.getText().toString();
-
-
                      boolean CL = Dbh.checkID(ClientID);
-
-
-
-
 
                      if (CL == true)
                      {
-
-
-
-
                         DBManager dbManager = new DBManager(MainActivity.this);
                          try {
                              dbManager.open();
@@ -142,19 +139,16 @@ DatabaseHandler Dbh;
 
 
                              cursor.moveToFirst();
-                             Name = findViewById(R.id.name);
-                             Location = findViewById(R.id.location);
-                             loc2 = findViewById(R.id.loc2);
+                             Name = findViewById(R.id.Ime);
+                             Location = findViewById(R.id.Location);
+                             loc2 = findViewById(R.id.tipObjekt);
+                             Longitude = findViewById(R.id.longituda);
+                             Lattitude = findViewById(R.id.latituda);
                              Name.setText(cursor.getString(0));
                              Location.setText(cursor.getString(1));
                              loc2.setText(cursor.getString(2));
-
-
-
-
-
-
-
+                             Longitude.setText(cursor.getString(3));
+                             Lattitude.setText(cursor.getString(4));
 
 
                      }
@@ -168,24 +162,7 @@ DatabaseHandler Dbh;
 
 
 
- /* private void viewData() {
-      String ClientID = sifraKlient.getText().toString();
-        Cursor cursor = Dbh.viewData(ClientID);
 
-        if (cursor.getCount() == 0)
-        {
-            Toast.makeText(this,"Nema podatoci. ", Toast.LENGTH_SHORT).show();
-        }else {
-            while (cursor.getCount()>0)
-            {
-
-            }
-
-
-            listClients.setAdapter(adapter);
-        }
-    }
-*/
 
 
 
